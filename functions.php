@@ -17,6 +17,25 @@ $is_frontend_req = (!preg_match('/^(admin|login|wp-content)/', $current_path)
                     && (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)));
 
 
+$options_page = function() {
+    ?>
+    <div class="wrap">
+      <h2>Headless theme options</h2>
+    </div>
+    <?php
+};
+add_action('admin_menu', function() {
+    global $options_page;
+    add_menu_page(
+        'Headless theme options',
+        'Headless',
+        'manage_options',
+        'headless-options',
+        $options_page,
+        'dashicons-dismiss',
+        80
+    );
+});
 
 
 // find out if advanced custom fields is active
