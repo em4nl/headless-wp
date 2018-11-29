@@ -63,4 +63,4 @@ add_action('do_parse_request', function($do_parse, $wp) {
     $wp->query_vars = array();
     remove_action('template_redirect', 'redirect_canonical');
     return FALSE;
-});
+}, 30, 2);
