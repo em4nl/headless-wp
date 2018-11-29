@@ -38,6 +38,9 @@ if (is_admin()) {
             'type' => 'boolean',
         ));
         register_setting('em4nl_headless', 'em4nl_headless_redirect_url');
+        register_setting('em4nl_headless', 'em4nl_headless_redirect_is_permanent', array(
+            'type' => 'boolean',
+        ));
     });
 }
 

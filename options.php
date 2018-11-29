@@ -51,6 +51,19 @@
                     </p>
                 </td>
             </tr>
+            <tr valign="top">
+                <th scope="row">
+                    <label for="em4nl_headless_is_webhook">Redirect is permanent</label>
+                </th>
+                <td>
+                    <input
+                        id="em4nl_headless_redirect_is_permanent"
+                        type="checkbox"
+                        name="em4nl_headless_redirect_is_permanent"
+                        <?php if (get_option('em4nl_headless_redirect_is_permanent')): ?>checked<?php endif; ?>
+                    />
+                </td>
+            </tr>
         </table>
         <?php submit_button(); ?>
     </form>

@@ -7,5 +7,9 @@ if (!defined('ABSPATH')) {
 }
 
 
-// within WordPress context, do nothing LOL
-// TODO maybe redirect to user-supplied uri
+// redirect if a redirect url is set
+$redirect_url = get_option('em4nl_headless_redirect_url');
+if ($redirect_url) {
+    $permanent = get_option('em4nl_headless_redirect_is_permanent');
+    wp_redirect($redirect_url, $permanent ? '301' : '302');
+}
