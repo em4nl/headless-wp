@@ -17,25 +17,29 @@ $is_frontend_req = (!preg_match('/^(admin|login|wp-content)/', $current_path)
                     && (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)));
 
 
-$options_page = function() {
-    ?>
-    <div class="wrap">
-      <h2>Headless theme options</h2>
-    </div>
-    <?php
-};
-add_action('admin_menu', function() {
-    global $options_page;
-    add_menu_page(
-        'Headless theme options',
-        'Headless',
-        'manage_options',
-        'headless-options',
-        $options_page,
-        'dashicons-dismiss',
-        80
-    );
-});
+// add an options page to the menu
+if (is_admin()) {
+    add_action('admin_menu', function() {
+        add_menu_page(
+            'Headless theme options',
+            'Headless',
+            'manage_options',
+            'headless-options',
+            function() {
+                include __DIR__ . '/options.php';
+            },
+            'dashicons-dismiss',
+            80
+        );
+    });
+    add_action('admin_init', function() {
+        register_setting('em4nl_headless', 'em4nl_headless_command_or_webhook');
+        register_setting('em4nl_headless', 'em4nl_headless_is_webhook', array(
+            'type' => 'boolean',
+        ));
+        register_setting('em4nl_headless', 'em4nl_headless_redirect_url');
+    });
+}
 
 
 // find out if advanced custom fields is active
