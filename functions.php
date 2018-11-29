@@ -53,7 +53,22 @@ $is_acf_active = (is_plugin_active('advanced-custom-fields/acf.php')
 
 // register hook to run when content is changed
 $on_save_post = function() {
-    // TODO
+    $cmd_or_wh = get_option('em4nl_headless_command_or_webhook');
+    if ($cmd_or_wh) {
+        $is_wh = get_option('em4nl_headless_is_webhook');
+        if ($is_wh) {
+            // TODO
+            // - add more options for user like different http
+            //   methods, headers or post data
+            // - handle errors
+            // - bonus: show errors to user (after save_post? how?)
+            file_get_contents($cmd_or_wh);
+        } else {
+            // TODO
+            // - handle errors/output/exit_code
+            exec($cmd_or_wh);
+        }
+    }
 };
 add_action('save_post', $on_save_post, 20);
 if ($is_acf_active) {
