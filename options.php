@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h2>Headless theme options</h2>
+    <h2>Headless WP Settings</h2>
     <form method="post" action="options.php">
         <?php settings_fields('em4nl_headless'); ?>
         <?php do_settings_sections('em4nl_headless'); ?>

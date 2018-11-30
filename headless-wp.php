@@ -29,16 +29,14 @@ $is_frontend_req = (!preg_match('/^(admin|login|wp-content)/', $current_path)
 // add an options page to the menu
 if (is_admin()) {
     add_action('admin_menu', function() {
-        add_menu_page(
-            'Headless theme options',
-            'Headless',
+        add_options_page(
+            'Headless WP Settings',
+            'Headless WP',
             'manage_options',
             'headless-options',
             function() {
                 include __DIR__ . '/options.php';
-            },
-            'dashicons-dismiss',
-            80
+            }
         );
     });
     add_action('admin_init', function() {
