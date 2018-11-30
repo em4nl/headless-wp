@@ -1,4 +1,13 @@
 <?php
+/*
+Plugin Name: Headless WP
+Plugin URI: https://github.com/em4nl/headless-wp/
+Description: Use WordPress with a static site generator or other custom frontend
+Author: Emanuel Tannert <post@etannert.de>
+Version: 0.0.1
+Author URI: https://etannert.de/
+Text Domain: em4nl-headless-wp
+*/
 
 
 // don't run without WordPress context
@@ -86,3 +95,14 @@ add_action('do_parse_request', function($do_parse, $wp) {
     remove_action('template_redirect', 'redirect_canonical');
     return FALSE;
 }, 30, 2);
+
+
+// also, don't output anything from frontend requests, but redirect
+add_action('template_redirect', function() {
+    ob_start(function($html) {
+        $redirect_url = get_option('em4nl_headless_redirect_url');
+        if (!$redirect_url) return;
+        $permanent = get_option('em4nl_headless_redirect_is_permanent');
+        wp_redirect($redirect_url, $permanent ? '301' : '302');
+    });
+});
