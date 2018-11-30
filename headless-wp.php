@@ -22,6 +22,11 @@ $home_path = trim(parse_url(home_url(), PHP_URL_PATH), '/');
 if ($home_path && strpos($current_path, $home_path) === 0) {
     $current_path = trim(substr($current_path, strlen($home_path)), '/');
 }
+
+
+// the idea for the is_admin() and DOING_AJAX conditions comes from
+// this article https://roots.io/routing-wp-requests/ by Giuseppe
+// Mazzapica (https://github.com/gmazzap)
 $is_frontend_req = (!preg_match('/^(admin|login|wp-content)/', $current_path)
                     && (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)));
 
@@ -88,6 +93,8 @@ if (!$is_frontend_req) return;
 
 
 // if it is a frontend request, stop the unnecessary querying
+// the idea to use this action to prevent the query also comes
+// from the article by Giuseppe Mazzapica
 add_action('do_parse_request', function($do_parse, $wp) {
     $wp->query_vars = array();
     remove_action('template_redirect', 'redirect_canonical');
